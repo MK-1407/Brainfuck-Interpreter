@@ -3,21 +3,33 @@
 
 mod vga_buffer;
 use core::fmt::Write;
-use vga_buffer::Writer;
 use core::panic::PanicInfo;
+use vga_buffer::WRITER;
+use vga_buffer::Writer;
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
-    loop {
-        
-    }
+    loop {}
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    let mut writer = Writer::new();
-
-    writeln!(writer, "Brainfuck Kernel").unwrap();
-    writeln!(writer, "VGA Textmode Enabled").unwrap();
-
+    *WRITER.lock() = Some(Writer::new());
+    println!("Brainfuck Kernel");
+    println!("VGA Textmode Enabled");
+    println!("Integer test: {}", 42);
     loop {}
-} 
+}
+
+#[macro_export]
+macro_rules! print {
+    ($($arg:tt)*) => {
+        $crate::vga_buffer::_print(format_args!($($arg)*))
+    };
+}
+#[macro_export]
+macro_rules! println {
+    () => ($crate::print!("\n"));
+    ($($arg:tt)*) => {
+        $crate::print!("{}\n", format_args!($($arg)*))
+    };
+}

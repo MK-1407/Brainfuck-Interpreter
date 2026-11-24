@@ -25,7 +25,7 @@ impl Writer {
         Self {
             column_position: 0,
             row_position: 0,
-            color_code: 0x0f,
+            color_code: 0x0a,
             buffer: unsafe { &mut *buffer_ptr },
         }
     }
@@ -69,3 +69,12 @@ impl fmt::Write for Writer {
     }
 }
 
+#[doc(hidden)]
+pub fn _print(args: fmt::Arguments) {
+    use core::fmt::Write;
+    if let Some(writer) = WRITER.lock().as_mut() {
+        writer.write_fmt(args).unwrap();
+    }
+}
+use spin::Mutex;
+pub static WRITER: Mutex<Option<Writer>> = Mutex::new(None);
