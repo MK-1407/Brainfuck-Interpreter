@@ -1,14 +1,15 @@
-mod vm;
-use vm::VM;
+#![no_std]
+#![no_main]
+use core::panic::PanicInfo;
 
-fn main() -> Result<(), String> {
-    let program = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
-";
-    println!("Output:");
-    let mut vm = VM::new(program)?;
-    vm.run()?;
-    println!("\nMemory: {:?}", &vm.memory[0..5]);
-    println!("Data pointer: {}", vm.data_pointer);
-    println!("{:?}", vm.jump_table);
-    Ok(())
+#[panic_handler]
+fn panic(_info: &PanicInfo) -> ! {
+    loop {
+        
+    }
 }
+#[unsafe(no_mangle)]
+pub extern "C" fn _start() -> ! {
+    loop {
+    }
+} 
