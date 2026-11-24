@@ -1,10 +1,9 @@
 mod vm;
-
 use vm::VM;
 
-
 fn main() -> Result<(), String> {
-    let program = "++[>++<";
+    let program = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
+";
     println!("Output:");
     let mut vm = VM::new(program)?;
     vm.run()?;
