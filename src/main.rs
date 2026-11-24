@@ -2,7 +2,6 @@
 #![no_main]
 
 mod vga_buffer;
-use core::fmt::Write;
 use core::panic::PanicInfo;
 use vga_buffer::WRITER;
 use vga_buffer::Writer;
@@ -19,8 +18,6 @@ pub extern "C" fn _start() -> ! {
     println!("Brainfuck Kernel");
     println!("VGA Textmode Enabled");
     println!("Integer test: {}", 42);
-
-    panic!("Testing kernel panic handler");
     loop {}
 }
 
