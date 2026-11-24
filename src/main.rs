@@ -9,6 +9,8 @@ use vga_buffer::Writer;
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
+    println!("Kernel Panic!");
+    println!("{}",_info);
     loop {}
 }
 #[unsafe(no_mangle)]
@@ -17,6 +19,8 @@ pub extern "C" fn _start() -> ! {
     println!("Brainfuck Kernel");
     println!("VGA Textmode Enabled");
     println!("Integer test: {}", 42);
+
+    panic!("Testing kernel panic handler");
     loop {}
 }
 
